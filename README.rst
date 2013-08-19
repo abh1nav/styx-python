@@ -1,6 +1,12 @@
 styx: A simple distributed message queue based on Redis
 =======================================================
 
+.. image:: https://pypip.in/v/styx/badge.png
+        :target: https://pypi.python.org/pypi/styx
+
+.. image:: https://pypip.in/d/styx/badge.png
+        :target: https://pypi.python.org/pypi/styx
+
 Styx is a simple library that turns a bunch of standalone `Redis <http://redis.io/>`_ servers into a powerful distributed queue.
 The redis servers don't need any special configuration or even be aware of each other in any way. The messages are loosely ordered.
 A java version can be found `here <https://github.com/abh1nav/styx/>`_. The java and python versions are compatible - i.e. messages
