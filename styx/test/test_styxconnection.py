@@ -11,31 +11,23 @@ class StyxConnectionTestCase(unittest.TestCase):
 
 	def setUp(self):
 		self.hosts = [
-			{
-				"host": "localhost",
-				"port": 6700,
-				"db": 1
-			},
-			{
-				"host": "localhost",
-				"port": 6701,
-				"db": 1
-			},
-			{
-				"host": "localhost",
-				"port": 6702,
-				"db": 1
-			}
+			"localhost:6700",
+			"localhost:6701",
+			"localhost:6702"
 		]
+		self.conn = Styx(self.hosts)
+		self.q = self.conn.get_queue("testQ")
 
 	def tearDown(self):
-		pass
-		#for a in self.conn.pool.get_all():
-		#	a.delete("testQ")
+		for node in self.conn.pool.get_all():
+			node.delete("testQ")
 
-	def test_get_queue(self):
-		conn = Styx(self.hosts)
-		q = conn.get_queue("testQ")
-		self.assertEqual("testQ", q.get_name())
+	def test_queue(self):
+		self.assertEqual("testQ", self.q.get_name())
+		self.q.put("hello")
+		self.q.put("world")
+		self.assertEqual("hello", self.q.get())
 
-		q.put("hello")
+		self.q.put("wat")
+		self.assertEqual("world", self.q.get())
+		self.assertEqual("wat", self.q.get())
